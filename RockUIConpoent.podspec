@@ -31,9 +31,9 @@ TODO: Add long description of the pod here.
 
   s.ios.deployment_target = '9.0'
   
-   s.resource = [
-         '**/RockUIConpoent/Assets/*.bundle'
-    ]
+ s.resource = [
+    '**/RockUIConpoent/Assets/*.bundle'
+ ]
     
   s.subspec 'QMAudio' do |qmAudio|
       qmAudio.source_files = '**/RockUIConpoent/Classes/QMAudio/*.{h,m}'
