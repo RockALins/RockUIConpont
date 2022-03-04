@@ -11,7 +11,6 @@
 #import "QMFileCollectionCell.h"
 #import <Photos/Photos.h>
 #import "QMFileTabbarView.h"
-#import "QMChatRoomViewController.h"
 
 @interface QMPickedPhotoViewController ()<UICollectionViewDelegate, UICollectionViewDataSource> {
     UICollectionView *_collectionView;
@@ -58,11 +57,10 @@
     
     __weak QMPickedPhotoViewController *strongSelf = self;
     _tabbarView.selectAction = ^{
-        QMChatRoomViewController * tagViewController = nil;
+        Class chatRoomClass = NSClassFromString(@"QMChatRoomViewController");
         for (UIViewController *viewController in strongSelf.navigationController.viewControllers) {
-            if ([viewController isKindOfClass:[QMChatRoomViewController class]]) {
-                tagViewController = (QMChatRoomViewController *)viewController;
-                [strongSelf.navigationController popToViewController:tagViewController animated:true];
+            if ([viewController isKindOfClass:chatRoomClass]) {
+                [strongSelf.navigationController popToViewController:viewController animated:true];
                 
                 for (PHAsset *asset in strongSelf.pickedImageSet) {
                                             

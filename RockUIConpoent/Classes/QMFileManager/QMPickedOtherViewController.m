@@ -1,33 +1,32 @@
 //
-//  QMPickedDocViewController.m
+//  QMPickedOtherViewController.m
 //  IMSDK-OC
 //
 //  Created by HCF on 16/8/10.
 //  Copyright © 2016年 HCF. All rights reserved.
 //
 
-#import "QMPickedDocViewController.h"
+#import "QMPickedOtherViewController.h"
 #import "QMHeader.h"
 #import "QMFileManager.h"
 #import "QMFileTabbarView.h"
 #import "QMProfileManager.h"
 #import "QMFileTableCell.h"
 #import "QMFileModel.h"
-#import "QMChatRoomViewController.h"
 
-@interface QMPickedDocViewController ()<UITableViewDelegate, UITableViewDataSource> {
+@interface QMPickedOtherViewController ()<UITableViewDelegate, UITableViewDataSource> {
     UITableView *_tableView;
     QMFileTabbarView *_tabbarView;
     
-    NSArray *_docArray;
+    NSArray *_otherArray;
     CGFloat _navHeight;
 }
 
-@property (nonatomic, strong) NSMutableSet *pickedDocSet;
+@property (nonatomic, strong) NSMutableSet *pickedOtherSet;
 
 @end
 
-@implementation QMPickedDocViewController
+@implementation QMPickedOtherViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -37,7 +36,7 @@
 
     self.view.backgroundColor = [UIColor whiteColor];
     
-    self.pickedDocSet = [[NSMutableSet alloc] initWithCapacity:10];
+    self.pickedOtherSet = [[NSMutableSet alloc] initWithCapacity:10];
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, QM_kScreenWidth, QM_kScreenHeight-_navHeight-44) style:UITableViewStylePlain];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
@@ -52,15 +51,13 @@
     
     [_tableView registerClass:[QMFileTableCell class] forCellReuseIdentifier:NSStringFromClass(QMFileTableCell.self)];
     
-    __weak  QMPickedDocViewController *strongSelf = self;
+    __weak QMPickedOtherViewController *strongSelf = self;
     _tabbarView.selectAction = ^{
-        QMChatRoomViewController * tagViewController = nil;
+        Class chatRoomClass = NSClassFromString(@"QMChatRoomViewController");
         for (UIViewController *viewController in strongSelf.navigationController.viewControllers) {
-            if ([viewController isKindOfClass:[QMChatRoomViewController class]]) {
-                tagViewController = (QMChatRoomViewController *)viewController;
-                [strongSelf.navigationController popToViewController:tagViewController animated:true];
-                
-                for (QMFileModel *model in strongSelf.pickedDocSet) {
+            if ([viewController isKindOfClass:chatRoomClass]) {
+                [strongSelf.navigationController popToViewController:viewController animated:true];
+                for (QMFileModel *model in strongSelf.pickedOtherSet) {
                     if (strongSelf.callBackBlock) {
                         strongSelf.callBackBlock(model.fileName, model.fileSize, model.filePath);
                     }
@@ -78,10 +75,7 @@
 
 - (void)getData {
     QMProfileManager * manager = [QMProfileManager sharedInstance];
-    _docArray = [manager getFilesAttributes:DOCX];
-    if (_docArray.count == 0) {
-        
-    }
+    _otherArray = [manager getFilesAttributes:OTHER];
     [_tableView reloadData];
 }
 
@@ -98,7 +92,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _docArray.count;
+    return _otherArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -108,33 +102,33 @@
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    QMFileModel *model = _docArray[indexPath.row];
+    QMFileModel *model = _otherArray[indexPath.row];
     if ([cell isKindOfClass:[QMFileTableCell class]]) {
         QMFileTableCell *displayCell = (QMFileTableCell *)cell;
         [displayCell configureWithModel:model];
         
-        displayCell.pickedItemImageView.hidden = ![self.pickedDocSet containsObject:model];
+        displayCell.pickedItemImageView.hidden = ![self.pickedOtherSet containsObject:model];
     }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    QMFileModel *model = _docArray[indexPath.row];
-    if ([self.pickedDocSet containsObject:model]) {
-        [self.pickedDocSet removeObject:model];
+    QMFileModel *model = _otherArray[indexPath.row];
+    if ([self.pickedOtherSet containsObject:model]) {
+        [self.pickedOtherSet removeObject:model];
     }else {
-        if ([self.pickedDocSet count]>0) {
+        if ([self.pickedOtherSet count]>0) {
             
         }else {
-            [self.pickedDocSet addObject:model];
+            [self.pickedOtherSet addObject:model];
         }
     }
     
     QMFileTableCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    cell.pickedItemImageView.hidden = ![self.pickedDocSet containsObject:model];
+    cell.pickedItemImageView.hidden = ![self.pickedOtherSet containsObject:model];
     
-    if ([self.pickedDocSet count]>0) {
+    if ([self.pickedOtherSet count]>0) {
         _tabbarView.doneButton.selected = YES;
     }else {
         _tabbarView.doneButton.selected = NO;
@@ -145,5 +139,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 @end

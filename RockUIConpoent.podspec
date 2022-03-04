@@ -37,29 +37,10 @@ TODO: Add long description of the pod here.
     
   s.subspec 'QMAudio' do |qmAudio|
       qmAudio.source_files = '**/RockUIConpoent/Classes/QMAudio/*.{h,m}'
-      # qmAudio.dependency ''
   end
   
   s.subspec 'QMFileManager' do |qmFileManager|
-     qmFileManager.subspec 'Cell' do |cell|
-        cell.source_files = '**/RockUIConpoent/Classes/QMFileManager/Cell/*.{h,m}'
-        cell.dependency 'RockUIConpoent/Classes/QMFileManager/Model'
-     end
-     
-    qmFileManager.subspec 'Model' do |model|
-        model.source_files = '**/RockUIConpoent/Classes/QMFileManager/Model/*.{h,m}'
-     end
-     
-    qmFileManager.subspec 'View' do |view|
-        view.source_files = '**/RockUIConpoent/Classes/QMFileManager/View/*.{h,m}'
-     end
-     
-    qmFileManager.subspec 'ViewController' do |viewcontroller|
-        viewcontroller.source_files = '**/RockUIConpoent/Classes/QMFileManager/ViewController/*.{h,m}'
-        viewcontroller.dependency 'RockUIConpoent/Classes/QMFileManager/Model'
-        viewcontroller.dependency 'RockUIConpoent/Classes/QMFileManager/Cell'
-        viewcontroller.dependency 'RockUIConpoent/Classes/QMFileManager/View'
-     end
+       qmFileManager.source_files = '**/RockUIConpoent/Classes/**/*.{h,m}'
   end
 
    s.pod_target_xcconfig = {'VALID_ARCHS'=>'armv7 x86_64 arm64'}

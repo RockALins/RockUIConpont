@@ -11,7 +11,6 @@
 #import <Photos/Photos.h>
 #import "QMVideoTableCell.h"
 #import "QMFileTabbarView.h"
-#import "QMChatRoomViewController.h"
 
 @interface QMPickedVideoViewController () <UITableViewDelegate, UITableViewDataSource> {
     UITableView *_tableView;
@@ -51,14 +50,12 @@
     _tabbarView.frame = CGRectMake(0, QM_kScreenHeight-44-_navHeight, QM_kScreenWidth, 44);
     [self.view addSubview:_tabbarView];
     
-//    __weak QMPickedVideoViewController *strongSelf = self;
     __weak typeof(self)weakSelf = self;
     _tabbarView.selectAction = ^{
-        QMChatRoomViewController * tagViewController = nil;
+        Class chatRoomClass = NSClassFromString(@"QMChatRoomViewController");
         for (UIViewController *viewController in weakSelf.navigationController.viewControllers) {
-            if ([viewController isKindOfClass:[QMChatRoomViewController class]]) {
-                tagViewController = (QMChatRoomViewController *)viewController;
-                [weakSelf.navigationController popToViewController:tagViewController animated:true];
+            if ([viewController isKindOfClass:chatRoomClass]) {
+                [weakSelf.navigationController popToViewController:viewController animated:true];
                 
                 for (PHAsset *asset in weakSelf.pickedImageSet) {
 //                    [QMPushManager share].asset = asset;
