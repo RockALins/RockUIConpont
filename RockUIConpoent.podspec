@@ -34,14 +34,10 @@ TODO: Add long description of the pod here.
  s.resource = [
     '**/RockUIConpoent/Assets/*.bundle'
  ]
-    
-  s.subspec 'QMAudio' do |qmAudio|
-      qmAudio.source_files = '**/RockUIConpoent/Classes/QMAudio/*.{h,m}'
-  end
   
-  s.subspec 'QMFileManager' do |qmFileManager|
-       qmFileManager.source_files = '**/RockUIConpoent/Classes/**/*.{h,m}'
-  end
+ #s.source_files = '**/RockUIConpoent/Classes/**/*'
+         
+  
 
    s.pod_target_xcconfig = {'VALID_ARCHS'=>'armv7 x86_64 arm64'}
    s.requires_arc = true
