@@ -47,5 +47,5 @@ TODO: Add long description of the pod here.
    s.requires_arc = true
    s.frameworks = 'UIKit'
    s.dependency 'RockUICores'
-   
+   #pod trunk push RockUIConpoent.podspec --allow-warnings
 end

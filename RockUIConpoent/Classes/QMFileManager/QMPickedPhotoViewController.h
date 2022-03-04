@@ -16,4 +16,6 @@ typedef void(^CallBackBlock)(NSString *name, NSString * size, NSString * path);
 
 @property (nonatomic, assign)BOOL isForm;
 
+@property (nonatomic, copy) NSString *vcName;
+
 @end

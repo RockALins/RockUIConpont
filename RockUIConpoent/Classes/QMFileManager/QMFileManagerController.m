@@ -95,6 +95,7 @@
         case 0: {
             QMPickedDocViewController *viewController = [[QMPickedDocViewController alloc] init];
             viewController.isForm = self.isForm;
+            viewController.vcName = self.vcName;
             viewController.callBackBlock = ^(NSString *name, NSString *size, NSString *path) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     self.callBackBlock(name, size, path);
@@ -106,6 +107,7 @@
         case 1: {
             QMPickedPhotoViewController *viewController = [[QMPickedPhotoViewController alloc] init];
             viewController.isForm = self.isForm;
+            viewController.vcName = self.vcName;
             viewController.callBackBlock = ^(NSString *name, NSString *size, NSString *path) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     self.callBackBlock(name, size, path);
@@ -117,6 +119,7 @@
         case 2: {
             QMPickedAudioViewController *viewController = [[QMPickedAudioViewController  alloc] init];
             viewController.isForm = self.isForm;
+            viewController.vcName = self.vcName;
             viewController.callBackBlock = ^(NSString *name, NSString *size, NSString *path) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     self.callBackBlock(name, size, path);
@@ -128,6 +131,7 @@
         case 3: {
             QMPickedVideoViewController *viewController = [[QMPickedVideoViewController alloc] init];
             viewController.isForm = self.isForm;
+            viewController.vcName = self.vcName;
             viewController.callBackBlock = ^(NSString *name, NSString *size, NSString *path) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     self.callBackBlock(name, size, path);
@@ -139,6 +143,7 @@
         case 4: {
             QMPickedOtherViewController *viewController = [[QMPickedOtherViewController alloc] init];
             viewController.isForm = self.isForm;
+            viewController.vcName = self.vcName;
             viewController.callBackBlock = ^(NSString *name, NSString *size, NSString *path) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     self.callBackBlock(name, size, path);

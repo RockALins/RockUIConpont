@@ -52,7 +52,7 @@
     
     __weak typeof(self)weakSelf = self;
     _tabbarView.selectAction = ^{
-        Class chatRoomClass = NSClassFromString(@"QMChatRoomViewController");
+        Class chatRoomClass = NSClassFromString(weakSelf.vcName);
         for (UIViewController *viewController in weakSelf.navigationController.viewControllers) {
             if ([viewController isKindOfClass:chatRoomClass]) {
                 [weakSelf.navigationController popToViewController:viewController animated:true];

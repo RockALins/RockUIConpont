@@ -55,7 +55,7 @@
     
     __weak QMPickedAudioViewController *strongSelf = self;
     _tabbarView.selectAction = ^{
-        Class chatRoomClass = NSClassFromString(@"QMChatRoomViewController");
+        Class chatRoomClass = NSClassFromString(strongSelf.vcName);
         for (UIViewController *viewController in strongSelf.navigationController.viewControllers) {
             if ([viewController isKindOfClass:chatRoomClass]) {
                 [strongSelf.navigationController popToViewController:viewController animated:true];
